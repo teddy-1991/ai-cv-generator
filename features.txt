@@ -1,0 +1,6 @@
+## 키워드 추출 할 때 사용한 것들
+ -> TF-IDF (Term Frequency - Inverse Document Frequency)
+ -> NER (Named Entity Recognition) : 텍스트에서 의미 있는 개체(Entity)를 자동으로 인식하는 기술
+   잡 디스크립션에서 "직무, 기술, 회사명"을 자동으로 추출할 수 있다.
+   무료 라이브러리인 spaCy를 사용
+   preshed spacy 다운 받기 위해서 cmd를 관리자 권한으로 실행해서 함. 
