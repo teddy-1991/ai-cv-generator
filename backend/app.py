@@ -101,9 +101,18 @@ def generate_cover_letter_api():
     if not resume_text or not job_description:
         return jsonify({"error": "Resume text and job description are required."}), 400
 
-    cover_letter = generate_cover_letter(resume_text, job_description)
+    keywords_data = extract_gpt_keywords(resume_text, job_description)
+    keywords = keywords_data.get("keywords", [])
 
-    return jsonify(cover_letter)
+    # Check the extracted keywords
+    print(f"[DEBUG] Extracted Keywords: {keywords}")
+
+    cover_letter_data = generate_cover_letter(resume_text, job_description, keywords)
+
+    return jsonify({
+        "cover_letter": cover_letter_data.get("cover_letter",""),
+        "keywords": keywords
+    })
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

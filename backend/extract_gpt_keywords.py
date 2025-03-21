@@ -1,26 +1,28 @@
+# extract_gpt_keywords.py
+
 import openai
 import os
 import json
 from dotenv import load_dotenv
 
-# ✅ .env 파일에서 API 키 로드
-load_dotenv()
+load_dotenv(dotenv_path="backend/.env.local")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def extract_gpt_keywords(resume_text, job_description_text):
     prompt = f"""
     You are an AI specialized in resume and job description analysis.
-    Extract the **most relevant** technical skills and industry keywords from the given resume and job description.
-    Ensure that the keywords directly match the required skills in the job description.
+    Extract a total of **20 most relevant keywords** from the given resume and job description.
 
-    **Guidelines:**
-    - Extract up to **15 most relevant** keywords.
-    - Return results in a **valid JSON format** like this:
+    **Keyword Types and Ratio:**
+    - Extract **13 technical skills** (e.g., programming languages, tools, certifications)
+    - Extract **7 transferable skills** (e.g., leadership, time management, communication)
+    - Separate them clearly in the JSON output
+
+    **Output Format (JSON):**
     {{
-      "keywords": ["Python", "AWS", "Machine Learning", "Data Science"]
+      "technical_skills": ["Python", "Docker", "AWS", ...],
+      "transferable_skills": ["Teamwork", "Adaptability", "Communication", ...]
     }}
-    - Focus on technical skills, industry terms, and certifications only.
-    - Do not include general words like "team player", "communication", "detail-oriented".
 
     **Resume:**
     {resume_text}
@@ -29,25 +31,29 @@ def extract_gpt_keywords(resume_text, job_description_text):
     {job_description_text}
     """
 
-    response = openai.chat.completions.create(  
-        model="gpt-3.5-turbo",  
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are an expert in job market analysis and resume optimization."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.3  
+        temperature=0.3
     )
 
     try:
         raw_text = response.choices[0].message.content.strip()
-        
-        # ✅ 코드 블록(````json ... `````) 제거
         if raw_text.startswith("```json"):
-            raw_text = raw_text[7:-3].strip()  # ```json\n{ ... }\n``` 제거
-
-        # ✅ JSON 변환
+            raw_text = raw_text[7:-3].strip()
         parsed_data = json.loads(raw_text)
-        return parsed_data  # ✅ JSON으로 반환
+
+        # ✅ 합쳐서 하나의 키워드 배열로 반환
+        all_keywords = parsed_data["technical_skills"] + parsed_data["transferable_skills"]
+
+        # ✅ 로그 확인
+        print(f"🛠️ Technical: {parsed_data['technical_skills']}")
+        print(f"🧠 Transferable: {parsed_data['transferable_skills']}")
+
+        return {"keywords": all_keywords}
     except Exception as e:
         print(f"❌ GPT API 호출 실패: {e}")
         return {"error": "GPT API 호출 실패"}
