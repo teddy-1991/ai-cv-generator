@@ -5,8 +5,16 @@ import os
 import json
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path="backend/.env.local")
+
+# ✅ 올바른 경로로 `.env.local` 로드
+env_path = os.path.join(os.path.dirname(__file__), ".env.local")
+load_dotenv(dotenv_path=env_path)
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# ✅ 디버깅용 출력 (API 키가 제대로 불러와지는지 확인)
+print(f"🔍 Loaded API Key: {openai.api_key}")
+
 
 def extract_gpt_keywords(resume_text, job_description_text):
     prompt = f"""

@@ -13,7 +13,9 @@ const CVInput = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [loading, setLoading] = useState(false);
+  const [keywords, setKeywords] = useState([]);
 
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -53,10 +55,15 @@ const handleGenerateCoverLetter = async () => {
     });
 
     setCoverLetter(response.data.cover_letter);
+    setKeywords(response.data.keywords || []); // ✅ 키워드도 같이 저장
 
     // ✅ 새 페이지로 이동하면서 커버 레터 데이터 전달
-    navigate("/cover-letter", { state: { coverLetter: response.data.cover_letter } });
-  } catch (error) {
+ navigate("/cover-letter", {
+      state: {
+        coverLetter: response.data.cover_letter,
+        keywords: response.data.keywords || []
+      }
+    });  } catch (error) {
     console.error("❌ Cover Letter Generation Failed", error);
   }
   setLoading(false);
