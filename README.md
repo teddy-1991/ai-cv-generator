@@ -24,7 +24,7 @@ Users can upload their resume and a job description, and the system will extract
 | AI Engine | OpenAI GPT API       |
 
 ---
-📸 Demo (Screenshots)
+## 📸 Demo (Screenshots)
 ![ai1](https://github.com/user-attachments/assets/fcfee0cc-56b5-447f-9e2f-9776da0b3852)
 ![ai2](https://github.com/user-attachments/assets/f0daa806-2ea2-42bd-b55b-f16067de5b3c)
 ![ai4](https://github.com/user-attachments/assets/906d5eb5-3be0-49a3-92c0-b7cbe942d320)
