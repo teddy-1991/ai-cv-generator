@@ -102,7 +102,21 @@ const handleGenerateCoverLetter = async () => {
               )}
             </div>
           </div>
-
+          {selectedImage && (
+            <div
+              className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
+              style={{ zIndex: 9999, padding: "2rem" }} onClick={() => setSelectedImage(null)} >
+              <img src={selectedImage} alt="Selected" className="shadow-lg"
+                style={{
+                  maxHeight: "95vh",
+                  maxWidth: "95vw",
+                  objectFit: "contain",
+                  border: "4px solid white",
+                  borderRadius: "8px"
+                }}
+              />
+            </div>
+          )}
           <div className="col-md-6">
             <div className="border rounded p-3">
               <h5 className="fw-bold">Job description</h5>
