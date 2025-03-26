@@ -13,7 +13,9 @@ const CVInput = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [coverLetter, setCoverLetter] = useState("");
   const [loading, setLoading] = useState(false);
+  const [keywords, setKeywords] = useState([]);
 
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -53,10 +55,15 @@ const handleGenerateCoverLetter = async () => {
     });
 
     setCoverLetter(response.data.cover_letter);
+    setKeywords(response.data.keywords || []); // ✅ 키워드도 같이 저장
 
     // ✅ 새 페이지로 이동하면서 커버 레터 데이터 전달
-    navigate("/cover-letter", { state: { coverLetter: response.data.cover_letter } });
-  } catch (error) {
+ navigate("/cover-letter", {
+      state: {
+        coverLetter: response.data.cover_letter,
+        keywords: response.data.keywords || []
+      }
+    });  } catch (error) {
     console.error("❌ Cover Letter Generation Failed", error);
   }
   setLoading(false);
@@ -95,7 +102,21 @@ const handleGenerateCoverLetter = async () => {
               )}
             </div>
           </div>
-
+          {selectedImage && (
+            <div
+              className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
+              style={{ zIndex: 9999, padding: "2rem" }} onClick={() => setSelectedImage(null)} >
+              <img src={selectedImage} alt="Selected" className="shadow-lg"
+                style={{
+                  maxHeight: "95vh",
+                  maxWidth: "95vw",
+                  objectFit: "contain",
+                  border: "4px solid white",
+                  borderRadius: "8px"
+                }}
+              />
+            </div>
+          )}
           <div className="col-md-6">
             <div className="border rounded p-3">
               <h5 className="fw-bold">Job description</h5>

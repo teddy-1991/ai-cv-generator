@@ -7,10 +7,16 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def generate_cover_letter(resume_text, job_description):
+def generate_cover_letter(resume_text, job_description, keywords=None):
     """
     OpenAI를 사용하여 맞춤형 커버 레터를 생성하는 함수
     """
+
+    keyword_text = ""
+    if keywords:
+        keyword_text = f"\nThe following keywords are considered highly relevant for this role:\n{', '.join(keywords)}\nUse them appropriately in the letter."
+
+
     prompt = f"""
     You are a professional career consultant and an expert in writing cover letters.
     Based on the provided resume and job description, generate a professional and persuasive cover letter.
@@ -22,6 +28,7 @@ def generate_cover_letter(resume_text, job_description):
       2. **Body**: Highlight key skills and experiences that match the job requirements.
       3. **Conclusion**: Politely request an opportunity to discuss further and express gratitude.
 
+    {keyword_text}
     **Resume:**
     {resume_text}
 
