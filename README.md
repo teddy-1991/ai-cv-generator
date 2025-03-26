@@ -30,6 +30,14 @@ Users can upload their resume and a job description, and the system will extract
 ![ai3](https://github.com/user-attachments/assets/4c79296a-e2d1-4656-b901-aca4138aabfc)
 
 ---
+
+## 📄 License
+
+This project is licensed under the MIT License.  
+You are free to use, modify, and distribute it with attribution.
+
+---
+
 ## ⚙️ Getting Started
 
 ```bash
