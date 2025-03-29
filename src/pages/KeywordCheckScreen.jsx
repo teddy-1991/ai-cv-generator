@@ -20,12 +20,12 @@ const KeywordCheckScreen = () => {
     matched: { ...matched_keywords }
   });
 
+  const [selectedStyle, setSelectedStyle] = useState("Professional");
   const [newKeyword, setNewKeyword] = useState("");
-  const [targetSection, setTargetSection] = useState("matched"); // default
+  const [targetSection, setTargetSection] = useState("matched");
   const [targetType, setTargetType] = useState("technical_skills");
   const [loading, setLoading] = useState(false);
 
-  // Add a new keyword to selected section/type
   const handleAddKeyword = () => {
     const trimmed = newKeyword.trim();
     if (!trimmed) return;
@@ -40,14 +40,12 @@ const KeywordCheckScreen = () => {
     }
   };
 
-  // Delete a keyword from selected section/type
   const handleDeleteKeyword = (sectionKey, type, index) => {
     const updated = { ...keywords };
     updated[sectionKey][type].splice(index, 1);
     setKeywords(updated);
   };
 
-  // Combine all keywords into a single list for cover letter generation
   const getAllKeywords = () => {
     const all = [
       ...keywords.resume.technical_skills,
@@ -57,7 +55,6 @@ const KeywordCheckScreen = () => {
       ...keywords.matched.technical_skills,
       ...keywords.matched.transferable_skills
     ];
-    // Remove duplicates
     return [...new Set(all)];
   };
 
@@ -74,7 +71,8 @@ const KeywordCheckScreen = () => {
       const response = await axios.post("http://localhost:5000/generate_cover_letter", {
         resume_text: resumeText,
         job_description: jobDescription,
-        keywords: allKeywords
+        keywords: allKeywords,
+        style: selectedStyle
       });
 
       const coverLetter = response.data.cover_letter;
@@ -82,7 +80,8 @@ const KeywordCheckScreen = () => {
       navigate("/cover-letter", {
         state: {
           coverLetter,
-          keywords: allKeywords
+          keywords: allKeywords,
+          style: selectedStyle
         }
       });
     } catch (error) {
@@ -92,7 +91,6 @@ const KeywordCheckScreen = () => {
     setLoading(false);
   };
 
-  // Render tag UI
   const renderTags = (sectionKey, type) => (
     <div className="d-flex flex-wrap gap-2 mb-2">
       {keywords[sectionKey][type].map((keyword, idx) => (
@@ -113,6 +111,16 @@ const KeywordCheckScreen = () => {
     <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light">
       <div className="card p-4 shadow-lg" style={{ width: "90%", maxWidth: "1000px" }}>
         <h2 className="fw-bold mb-4 text-center">📝 Review & Edit Keywords</h2>
+
+        {/* Style Selection */}
+        <div className="mb-4">
+          <label className="form-label fw-bold">Select Writing Style:</label>
+          <select className="form-select w-50" value={selectedStyle} onChange={(e) => setSelectedStyle(e.target.value)}>
+            <option value="Professional">Professional</option>
+            <option value="Casual">Casual</option>
+            <option value="Friendly">Friendly</option>
+          </select>
+        </div>
 
         {["resume", "job", "matched"].map((sectionKey) => (
           <div key={sectionKey} className="mb-4">
