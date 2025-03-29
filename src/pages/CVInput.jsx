@@ -84,12 +84,13 @@ const CVInput = () => {
                   <p>{resumePreview}</p>
                 </div>
               ) : (
-                <div className="border rounded p-2 text-center" style={{ cursor: "pointer" }}>
-                  <input type="file" className="d-none" accept=".pdf,.docx" id="resume-upload" onChange={handleFileChange} />
-                  <label htmlFor="resume-upload" className="d-block">
-                    <span className="fw-bold">📂 Drag and Drop</span> or <span className="text-primary">Upload</span>
-                  </label>
+                <div className="border rounded p-2 text-center" style={{ cursor: "pointer" }}
+                onClick={() => document.getElementById("resume-upload").click()} >
+                <input type="file" className="d-none" accept=".pdf,.docx" id="resume-upload" onChange={handleFileChange} />
+                <div className="d-block">
+                  <span className="fw-bold">📂 Drag and Drop</span> or <span className="text-primary">Upload</span>
                 </div>
+              </div>
               )}
               {resumeImages.length > 0 && (
                 <div className="mt-3">
