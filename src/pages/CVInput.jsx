@@ -40,34 +40,35 @@ const CVInput = () => {
     }
   };
 
-// ✅ 버튼 클릭 시 새로운 페이지로 이동하도록 수정
-const handleGenerateCoverLetter = async () => {
-  if (!resumePreview.trim() || !jobDescription) {
-    alert("이력서 또는 잡 디스크립션을 입력하세요!");
-    return;
-  }
-
-  setLoading(true);
-  try {
-    const response = await axios.post("http://localhost:5000/generate_cover_letter", {
-      resume_text: resumePreview,
-      job_description: jobDescription,
-    });
-
-    setCoverLetter(response.data.cover_letter);
-    setKeywords(response.data.keywords || []); // ✅ 키워드도 같이 저장
-
-    // ✅ 새 페이지로 이동하면서 커버 레터 데이터 전달
- navigate("/cover-letter", {
-      state: {
-        coverLetter: response.data.cover_letter,
-        keywords: response.data.keywords || []
-      }
-    });  } catch (error) {
-    console.error("❌ Cover Letter Generation Failed", error);
-  }
-  setLoading(false);
-};
+  const handleExtractKeywords = async () => {
+    if (!resumePreview.trim() || !jobDescription) {
+      alert("Upload resume or Write about job description!");
+      return;
+    }
+  
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:5000/extract_keywords", {
+        resume_text: resumePreview,
+        job_description: jobDescription,
+      });
+  
+      // ✅ Send the new structured data
+      navigate("/keywords", {
+        state: {
+          resume_keywords: response.data.resume_keywords,
+          job_keywords: response.data.job_keywords,
+          matched_keywords: response.data.matched_keywords,
+          resumeText: resumePreview,
+          jobDescription: jobDescription,
+        },
+      });
+    } catch (error) {
+      console.error("❌ Failed to extract keywords", error);
+    }
+    setLoading(false);
+  };
+  
 
   return (
     <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
@@ -126,7 +127,10 @@ const handleGenerateCoverLetter = async () => {
         </div>
 
         <div className="text-end mt-3">
-          <button className="btn btn-primary px-4 py-2 fw-bold" onClick={handleGenerateCoverLetter} disabled={loading}>{loading ? "Generating..." : "Generate Cover Letter"}</button>
+          <button className="btn btn-primary px-4 py-2 fw-bold"
+          onClick={handleExtractKeywords}  disabled={loading}>
+            {loading ? "Extracting..." : "Generate Cover Letter"}
+          </button>
         </div>
 
         {coverLetter && (

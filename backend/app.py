@@ -79,15 +79,14 @@ def upload_resume():
 def get_image(filename):
     return send_from_directory(app.config["IMAGE_FOLDER"], filename)
 
-@app.route("/extract_gpt_keywords", methods=["POST"])
-def extract_gpt_keywords_api():
-    data = request.get_json()
+@app.route("/extract_keywords", methods=["POST"])
+def extract_keywords_route():
+    data = request.json
     resume_text = data.get("resume_text", "")
     job_description = data.get("job_description", "")
-    if not resume_text or not job_description:
-        return jsonify({"error": "Resume text and job description are required."}), 400
-    keywords = extract_gpt_keywords(resume_text, job_description)
-    return jsonify({"gpt_keywords": keywords})
+
+    keywords_data = extract_gpt_keywords(resume_text, job_description)
+    return jsonify(keywords_data)
 
 @app.route("/generate_cover_letter", methods=["POST"])
 def generate_cover_letter_api():

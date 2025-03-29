@@ -3,13 +3,13 @@ import os
 import json
 from dotenv import load_dotenv
 
-# ✅ .env 파일에서 API 키 로드
+# Load API key from .env
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_cover_letter(resume_text, job_description, keywords=None):
     """
-    OpenAI를 사용하여 맞춤형 커버 레터를 생성하는 함수
+    Function that generate custom cover letter with OpenAI
     """
 
     keyword_text = ""
