@@ -76,12 +76,16 @@ const KeywordCheckScreen = () => {
       });
 
       const coverLetter = response.data.cover_letter;
-
+      
+      localStorage.setItem("resumeText", resumeText);
+      localStorage.setItem("jobDescription", jobDescription);
       navigate("/cover-letter", {
         state: {
           coverLetter,
           keywords: allKeywords,
-          style: selectedStyle
+          style: selectedStyle,
+          resumeText,
+          jobDescription
         }
       });
     } catch (error) {
