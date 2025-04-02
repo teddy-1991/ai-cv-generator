@@ -10,13 +10,13 @@ const CoverLetterScreen = () => {
   const coverLetter = location.state?.coverLetter || "No cover letter generated.";
   const keywords = location.state?.keywords || [];
 
-  // ✅ PDF 다운로드 기능
+  
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
-    doc.text(coverLetter, 10, 10, { maxWidth: 180 }); // PDF에 텍스트 추가
-    doc.save("cover_letter.pdf"); // PDF 파일 저장
+    doc.text(coverLetter, 10, 10, { maxWidth: 180 }); 
+    doc.save("cover_letter.pdf"); 
   };
   
   return (
