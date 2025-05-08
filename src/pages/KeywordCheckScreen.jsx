@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Header from '../components/Header';
+import BackgroundWrapper from "../components/BackgroundWrapper";
 
 const KeywordCheckScreen = () => {
   const location = useLocation();
@@ -76,7 +78,7 @@ const KeywordCheckScreen = () => {
       });
 
       const coverLetter = response.data.cover_letter;
-      
+
       localStorage.setItem("resumeText", resumeText);
       localStorage.setItem("jobDescription", jobDescription);
       navigate("/cover-letter", {
@@ -95,10 +97,23 @@ const KeywordCheckScreen = () => {
     setLoading(false);
   };
 
-  const renderTags = (sectionKey, type) => (
-    <div className="d-flex flex-wrap gap-2 mb-2">
+  const renderTags = (sectionKey, type, align = "start") => (
+    <div
+      className={`d-flex flex-wrap gap-2 mb-2 justify-content-${align} text-center`}
+    >
       {keywords[sectionKey][type].map((keyword, idx) => (
-        <div key={idx} className="badge bg-primary text-white d-flex align-items-center px-2 py-1">
+        <div
+          key={idx}
+          className="badge text-white d-flex align-items-center"
+          style={{
+            backgroundColor: "#5f27cd",
+            color: "#fff",
+            padding: "0.5rem 0,9rem",
+            fontSize: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+          }}
+        >
           <span>{keyword}</span>
           <button
             type="button"
@@ -110,77 +125,132 @@ const KeywordCheckScreen = () => {
       ))}
     </div>
   );
+  
 
   return (
-    <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light">
-      <div className="card p-4 shadow-lg" style={{ width: "90%", maxWidth: "1000px" }}>
-        <h2 className="fw-bold mb-4 text-center">📝 Review & Edit Keywords</h2>
+    <BackgroundWrapper>
+      <Header />
+      <small className="text-dark position-absolute bottom-0 end-0 m-2"
+        style={{ zIndex: 2, fontSize: '0.8rem' }}>
+        Photo by <a href="https://unsplash.com/@magnetme" className="text-blue text-decoration-underline" target="_blank" rel="noopener noreferrer">Magnet.me</a> on Unsplash
+      </small>
 
-        {/* Style Selection */}
-        <div className="mb-4">
-          <label className="form-label fw-bold">Select Writing Style:</label>
-          <select className="form-select w-50" value={selectedStyle} onChange={(e) => setSelectedStyle(e.target.value)}>
-            <option value="Professional">Professional</option>
-            <option value="Casual">Casual</option>
-            <option value="Friendly">Friendly</option>
-          </select>
-        </div>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="card p-4 shadow-lg" style={{ width: "80%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+          <h2 className="fw-bold mb-4 text-center text-white">📝 Review & Edit Keywords</h2>
 
-        {["resume", "job", "matched"].map((sectionKey) => (
-          <div key={sectionKey} className="mb-4">
-            <h5 className="fw-bold text-capitalize">
-              {sectionKey === "resume" ? "📄 Resume" : sectionKey === "job" ? "📑 Job Description" : "✅ Matched"} Keywords
-            </h5>
-            <div>
-              <label className="fw-semibold">Technical Skills:</label>
-              {renderTags(sectionKey, "technical_skills")}
-            </div>
-            <div>
-              <label className="fw-semibold">Transferable Skills:</label>
-              {renderTags(sectionKey, "transferable_skills")}
-            </div>
-          </div>
-        ))}
-
-        <div className="border-top pt-3 mt-4">
-          <h6 className="fw-bold">Add New Keyword</h6>
-          <div className="row g-2 align-items-center">
-            <div className="col-md-4">
-              <select className="form-select" value={targetSection} onChange={(e) => setTargetSection(e.target.value)}>
-                <option value="resume">Resume</option>
-                <option value="job">Job Description</option>
-                <option value="matched">Matched</option>
+          <div className="row align-items-center mb-4">
+            {/* Style Dropdown */}
+            <div className="col-md-6">
+              <label className="fw-bold text-white" style={{ fontSize: "1.25rem" }}>
+                Select Writing Style:
+              </label>
+              <select
+                className="form-select mt-2"
+                style={{ maxWidth: "250px" }}
+                value={selectedStyle}
+                onChange={(e) => setSelectedStyle(e.target.value)}
+              >
+                <option value="Professional">Professional</option>
+                <option value="Casual">Casual</option>
+                <option value="Friendly">Friendly</option>
               </select>
             </div>
-            <div className="col-md-4">
-              <select className="form-select" value={targetType} onChange={(e) => setTargetType(e.target.value)}>
-                <option value="technical_skills">Technical</option>
-                <option value="transferable_skills">Transferable</option>
-              </select>
-            </div>
-            <div className="col-md-4 d-flex">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter keyword..."
-                value={newKeyword}
-                onChange={(e) => setNewKeyword(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleAddKeyword()}
-              />
-              <button className="btn btn-outline-secondary ms-2" onClick={handleAddKeyword}>
-                Add
+
+            {/* Confirm 버튼 */}
+            <div className="col-md-6 text-end mt-4">
+              <button
+                className="btn fw-bold"
+                style={{
+                  backgroundColor: "#7C6CE0",
+                  color: "#f0f0f0",
+                  border: "none",
+                  padding: "0.6rem 1.2rem",
+                  fontSize: "1rem",
+                  marginTop: "10px"
+                }}
+                onClick={handleConfirm}
+                disabled={loading}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#5f27cd"; 
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "#8E7BEF"; 
+                }}
+              >
+                {loading ? "Generating..." : "Confirm and Generate"}
               </button>
             </div>
           </div>
-        </div>
 
-        <div className="text-end mt-4">
-          <button className="btn btn-success px-4 py-2 fw-bold" onClick={handleConfirm} disabled={loading}>
-            {loading ? "Generating..." : "✅ Confirm and Generate"}
-          </button>
+          {/* Resume & Job Keywords side-by-side */}
+          <div className="row border-top">
+            <div className="col-md-6 mb-4 text-white mt-4">
+              <h5 className="fw-bold text-center">📄 Resume Keywords</h5>
+              <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Technical Skills</label>
+              {renderTags("resume", "technical_skills", "start")}
+              <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Transferable Skills</label>
+              {renderTags("resume", "transferable_skills", "start")}
+            </div>
+            <div className="col-md-6 my-4 text-white">
+              <h5 className="fw-bold text-center">📑 Job Description Keywords</h5>
+              <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Technical Skills</label>
+              {renderTags("job", "technical_skills", "start")}
+              <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Transferable Skills</label>
+              {renderTags("job", "transferable_skills", "start")}
+            </div>
+          </div>
+
+          {/* Matched Keywords */}
+          <div className="mb-4 text-white text-center border-top">
+            <h5 className="fw-bold mt-4">✅ Matched Keywords</h5>
+            <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Technical Skills</label>
+            {renderTags("matched", "technical_skills", "center")}
+            <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Transferable Skills</label>
+            {renderTags("matched", "transferable_skills", "center")}
+          </div>
+
+          {/* Add new keyword */}
+          <div className="border-top pt-3 mt-4">
+            <h5 className="fw-bold text-white">Add New Keyword</h5>
+            <div className="row g-2 align-items-center">
+              <div className="col-md-4">
+                <select className="form-select" value={targetSection} onChange={(e) => setTargetSection(e.target.value)}>
+                  <option value="resume">Resume</option>
+                  <option value="job">Job Description</option>
+                  <option value="matched">Matched</option>
+                </select>
+              </div>
+              <div className="col-md-4">
+                <select className="form-select" value={targetType} onChange={(e) => setTargetType(e.target.value)}>
+                  <option value="technical_skills">Technical</option>
+                  <option value="transferable_skills">Transferable</option>
+                </select>
+              </div>
+              <div className="col-md-4 d-flex">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter keyword..."
+                  value={newKeyword}
+                  onChange={(e) => setNewKeyword(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleAddKeyword()}
+                />
+                <button className="btn text-white ms-2" style={{ backgroundColor: "#8E7BEF" }} onClick={handleAddKeyword}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#5f27cd"; 
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "#8E7BEF"; 
+                }}>
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </BackgroundWrapper>
   );
 };
 
