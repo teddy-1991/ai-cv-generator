@@ -1,36 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import background from '../assets/background.jpg';
 import Header from '../components/Header'; 
+import BackgroundWrapper from "../components/BackgroundWrapper";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="min-vh-100 d-flex flex-column align-items-center justify-content-center"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        position: 'relative',
-      }}
-    >
-      {/* Overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(255, 255, 255, 0.35)',
-          zIndex: 1,
-        }}
-      ></div>
-
+    <BackgroundWrapper>
       <Header />
       <small className="text-dark position-absolute bottom-0 end-0 m-2"
       style={{ zIndex: 2, fontSize: '0.8rem' }}>
@@ -39,8 +17,8 @@ const Home = () => {
 
       {/* Content */}
       <div
-        className="position-relative d-flex justify-content-between align-items-start w-100"
-        style={{ zIndex: 2, padding: '0 3rem', gap: '2rem' }}
+        className="position-relative d-flex justify-content-between align-items-start"
+        style={{ zIndex: 2, padding: '0 1.5rem', gap: '1rem', maxWidth: "90%", margin: "0 auto", width: "100%" }}
       >
         {/* Left Section */}
         <div
@@ -68,7 +46,7 @@ const Home = () => {
         <div
           className="p-4 rounded shadow"
           style={{ width: '45%',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
            }}
         >
           <h4 className="fw-bold mb-3 text-info">📝 How to Use</h4>
@@ -87,7 +65,8 @@ const Home = () => {
           </ul>
         </div>
       </div>
-    </div>
+    
+    </BackgroundWrapper>
   );
 };
 
