@@ -17,8 +17,8 @@ const Home = () => {
 
       {/* Content */}
       <div
-        className="position-relative d-flex justify-content-between align-items-start w-100"
-        style={{ zIndex: 2, padding: '0 3rem', gap: '2rem' }}
+        className="position-relative d-flex justify-content-between align-items-start"
+        style={{ zIndex: 2, padding: '0 1.5rem', gap: '1rem', maxWidth: "90%", margin: "0 auto", width: "100%" }}
       >
         {/* Left Section */}
         <div
@@ -46,7 +46,7 @@ const Home = () => {
         <div
           className="p-4 rounded shadow"
           style={{ width: '45%',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
            }}
         >
           <h4 className="fw-bold mb-3 text-info">📝 How to Use</h4>

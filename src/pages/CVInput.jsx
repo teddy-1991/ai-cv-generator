@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackgroundWrapper from "../components/BackgroundWrapper";
+import Header from '../components/Header'; 
 
 const CVInput = () => {
   const navigate = useNavigate();
@@ -70,22 +71,27 @@ const CVInput = () => {
 
   return (
     <BackgroundWrapper>
-      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-        <div className="card p-4 shadow" style={{ height: "90%", width: "90%", maxWidth: "1200px" }}>
-          <h2 className="fw-bold mb-4 text-center">
-            <img></img>getInterviews</h2>
+      <Header />
+      <small className="text-dark position-absolute bottom-0 end-0 m-2"
+      style={{ zIndex: 2, fontSize: '0.8rem' }}>
+      Photo by <a href="https://unsplash.com/@magnetme" className="text-blue text-decoration-underline" target="_blank" rel="noopener noreferrer">Magnet.me</a> on Unsplash
+      </small>
+
+      <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "60%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
 
           <div className="row">
             {/* Resume Section */}
             <div className="col-md-6">
-              <div className="border rounded p-3">
+              <div className="border rounded p-3" style={{ backgroundColor: "#fff", minHeight: "450px" }}>
                 <h5 className="fw-bold">Resume</h5>
-
-                {resumePreview && (
+                
+                {/* Convert the resume into text showing a screen */}
+                {/* {resumePreview && (
                   <div className="border rounded p-3 bg-light mb-2" style={{ maxHeight: "200px", overflowY: "auto" }}>
                     <p>{resumePreview}</p>
                   </div>
-                )}
+                )} */}
 
                 {!resumePreview && (
                   <div className="border rounded p-2 text-center" style={{ cursor: "pointer" }}
@@ -160,11 +166,11 @@ const CVInput = () => {
 
             {/* Job Description Section */}
             <div className="col-md-6">
-              <div className="border rounded p-3">
+              <div className="border rounded p-3" style={{ backgroundColor: "#fff", minHeight: "450px" }}>
                 <h5 className="fw-bold">Job description</h5>
                 <textarea
                   className="form-control"
-                  rows="8"
+                  rows="15"
                   placeholder="Paste job description text..."
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
@@ -179,7 +185,15 @@ const CVInput = () => {
               className="btn btn-primary px-4 py-2 fw-bold"
               onClick={handleExtractKeywords}
               disabled={loading}
-              style={{ backgroundColor: "#8E7BEF" }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#5f27cd"; 
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#8E7BEF"; 
+              }}
+              style={{ backgroundColor: "#8E7BEF",
+                border: "none",
+               }}
             >
               {loading ? "Extracting..." : "Extract Keywords"}
             </button>
