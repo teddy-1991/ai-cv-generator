@@ -1,36 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import background from '../assets/background.jpg';
 import Header from '../components/Header'; 
+import BackgroundWrapper from "../components/BackgroundWrapper";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="min-vh-100 d-flex flex-column align-items-center justify-content-center"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        position: 'relative',
-      }}
-    >
-      {/* Overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(255, 255, 255, 0.35)',
-          zIndex: 1,
-        }}
-      ></div>
-
+    <BackgroundWrapper>
       <Header />
       <small className="text-dark position-absolute bottom-0 end-0 m-2"
       style={{ zIndex: 2, fontSize: '0.8rem' }}>
@@ -87,7 +65,8 @@ const Home = () => {
           </ul>
         </div>
       </div>
-    </div>
+    
+    </BackgroundWrapper>
   );
 };
 

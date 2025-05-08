@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BackgroundWrapper from "../components/BackgroundWrapper";
 
 const CVInput = () => {
   const navigate = useNavigate();
@@ -68,128 +69,132 @@ const CVInput = () => {
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-      <div className="card p-4 shadow" style={{ width: "80%", maxWidth: "900px" }}>
-        <h2 className="fw-bold mb-4 text-center">📄 AI-CV Generator</h2>
+    <BackgroundWrapper>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="card p-4 shadow" style={{ height: "90%", width: "90%", maxWidth: "1200px" }}>
+          <h2 className="fw-bold mb-4 text-center">
+            <img></img>getInterviews</h2>
 
-        <div className="row">
-          {/* Resume Section */}
-          <div className="col-md-6">
-            <div className="border rounded p-3">
-              <h5 className="fw-bold">Resume</h5>
+          <div className="row">
+            {/* Resume Section */}
+            <div className="col-md-6">
+              <div className="border rounded p-3">
+                <h5 className="fw-bold">Resume</h5>
 
-              {resumePreview && (
-                <div className="border rounded p-3 bg-light mb-2" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                  <p>{resumePreview}</p>
-                </div>
-              )}
-
-              {!resumePreview && (
-                <div className="border rounded p-2 text-center" style={{ cursor: "pointer" }}
-                  onClick={() => fileInputRef.current && fileInputRef.current.click()} >
-                  <input type="file" className="d-none" accept=".pdf,.docx" id="resume-upload" onChange={handleFileChange} ref={fileInputRef} />
-                  <div className="d-block">
-                    <span className="fw-bold">📂 Drag and Drop</span> or <span className="text-primary">Upload</span>
+                {resumePreview && (
+                  <div className="border rounded p-3 bg-light mb-2" style={{ maxHeight: "200px", overflowY: "auto" }}>
+                    <p>{resumePreview}</p>
                   </div>
-                </div>
-              )}
+                )}
 
-              {resumePreview && (
-                <div className="d-flex justify-content-between align-items-center mt-2">
-                  <div className="text-muted" style={{ cursor: "pointer" }} onClick={() => fileInputRef.current && fileInputRef.current.click()} >
+                {!resumePreview && (
+                  <div className="border rounded p-2 text-center" style={{ cursor: "pointer" }}
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()} >
                     <input type="file" className="d-none" accept=".pdf,.docx" id="resume-upload" onChange={handleFileChange} ref={fileInputRef} />
-                    <u>Click here to upload a different resume</u>
+                    <div className="d-block">
+                      <span className="text-primary">📂 Upload Resume</span>
+                    </div>
                   </div>
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => {
-                      setSelectedFile(null);
-                      setResumePreview("");
-                      setResumeImages([]);
-                    }}
-                  >
-                    ❌ Remove
-                  </button>
-                </div>
-              )}
+                )}
 
-              {resumeImages.length > 0 && (
-                <div className="mt-3">
-                  <h5>Preview</h5>
-                  <div className="d-flex flex-wrap">
-                    {resumeImages.map((img, index) => (
-                      <img
-                        key={index}
-                        src={img}
-                        alt={`preview-${index}`}
-                        className="img-thumbnail m-2"
-                        style={{ maxWidth: "200px", cursor: "pointer" }}
-                        onClick={() => setSelectedImage(img)}
-                      />
-                    ))}
+                {resumePreview && (
+                  <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div className="text-muted" style={{ cursor: "pointer" }} onClick={() => fileInputRef.current && fileInputRef.current.click()} >
+                      <input type="file" className="d-none" accept=".pdf,.docx" id="resume-upload" onChange={handleFileChange} ref={fileInputRef} />
+                      <u>Click here to upload a different resume</u>
+                    </div>
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => {
+                        setSelectedFile(null);
+                        setResumePreview("");
+                        setResumeImages([]);
+                      }}
+                    >
+                      ❌ Remove
+                    </button>
                   </div>
-                </div>
-              )}
+                )}
+
+                {resumeImages.length > 0 && (
+                  <div className="mt-3">
+                    <h5>Preview</h5>
+                    <div className="d-flex flex-wrap">
+                      {resumeImages.map((img, index) => (
+                        <img
+                          key={index}
+                          src={img}
+                          alt={`preview-${index}`}
+                          className="img-thumbnail m-2"
+                          style={{ maxWidth: "200px", cursor: "pointer" }}
+                          onClick={() => setSelectedImage(img)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Fullscreen Image Viewer */}
+            {selectedImage && (
+              <div
+                className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
+                style={{ zIndex: 9999, padding: "2rem" }}
+                onClick={() => setSelectedImage(null)}
+              >
+                <img
+                  src={selectedImage}
+                  alt="Selected"
+                  className="shadow-lg"
+                  style={{
+                    maxHeight: "95vh",
+                    maxWidth: "95vw",
+                    objectFit: "contain",
+                    border: "4px solid white",
+                    borderRadius: "8px",
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Job Description Section */}
+            <div className="col-md-6">
+              <div className="border rounded p-3">
+                <h5 className="fw-bold">Job description</h5>
+                <textarea
+                  className="form-control"
+                  rows="8"
+                  placeholder="Paste job description text..."
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                ></textarea>
+              </div>
             </div>
           </div>
 
-          {/* Fullscreen Image Viewer */}
-          {selectedImage && (
-            <div
-              className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
-              style={{ zIndex: 9999, padding: "2rem" }}
-              onClick={() => setSelectedImage(null)}
+          {/* Generate Button */}
+          <div className="text-end mt-3">
+            <button
+              className="btn btn-primary px-4 py-2 fw-bold"
+              onClick={handleExtractKeywords}
+              disabled={loading}
+              style={{ backgroundColor: "#8E7BEF" }}
             >
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className="shadow-lg"
-                style={{
-                  maxHeight: "95vh",
-                  maxWidth: "95vw",
-                  objectFit: "contain",
-                  border: "4px solid white",
-                  borderRadius: "8px",
-                }}
-              />
+              {loading ? "Extracting..." : "Extract Keywords"}
+            </button>
+          </div>
+
+          {/* Cover Letter Output (Optional) */}
+          {coverLetter && (
+            <div className="mt-4 p-3 border rounded bg-light">
+              <h5 className="fw-bold">Generated Cover Letter</h5>
+              <pre className="p-3 border rounded bg-white">{coverLetter}</pre>
             </div>
           )}
-
-          {/* Job Description Section */}
-          <div className="col-md-6">
-            <div className="border rounded p-3">
-              <h5 className="fw-bold">Job description</h5>
-              <textarea
-                className="form-control"
-                rows="8"
-                placeholder="Paste job description text..."
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-              ></textarea>
-            </div>
-          </div>
         </div>
-
-        {/* Generate Button */}
-        <div className="text-end mt-3">
-          <button
-            className="btn btn-primary px-4 py-2 fw-bold"
-            onClick={handleExtractKeywords}
-            disabled={loading}
-          >
-            {loading ? "Extracting..." : "Generate Cover Letter"}
-          </button>
-        </div>
-
-        {/* Cover Letter Output (Optional) */}
-        {coverLetter && (
-          <div className="mt-4 p-3 border rounded bg-light">
-            <h5 className="fw-bold">Generated Cover Letter</h5>
-            <pre className="p-3 border rounded bg-white">{coverLetter}</pre>
-          </div>
-        )}
       </div>
-    </div>
+    </BackgroundWrapper>
   );
 };
 
