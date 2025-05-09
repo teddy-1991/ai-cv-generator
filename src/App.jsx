@@ -4,6 +4,7 @@ import CVInput from './pages/CVInput';
 import CoverLetterScreen from './pages/CoverLetterScreen';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import KeywordCheckScreen from './pages/KeywordCheckScreen';
+import FeedbackPage from './pages/FeedbackPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/cv-input" element={<CVInput />} />
         <Route path="/cover-letter" element={<CoverLetterScreen />} />
         <Route path="/keywords" element={<KeywordCheckScreen />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
         </Routes>
     </div>
   );
