@@ -136,7 +136,7 @@ const KeywordCheckScreen = () => {
       </small>
 
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-        <div className="card p-4 shadow-lg" style={{ width: "80%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+        <div className="card p-4 shadow-lg" style={{ width: "80%", backgroundColor: 'rgba(0, 0, 0, 0.7)', marginTop: "100px" }}>
           <h2 className="fw-bold mb-4 text-center text-white">📝 Review & Edit Keywords</h2>
 
           <div className="row align-items-center mb-4">

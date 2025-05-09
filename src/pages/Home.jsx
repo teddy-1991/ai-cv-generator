@@ -18,7 +18,7 @@ const Home = () => {
       {/* Content */}
       <div
         className="position-relative d-flex justify-content-between align-items-start"
-        style={{ zIndex: 2, padding: '0 1.5rem', gap: '1rem', maxWidth: "90%", margin: "0 auto", width: "100%" }}
+        style={{ zIndex: 2, padding: '0 1.5rem', gap: '1rem', maxWidth: "90%", margin: "100px", width: "100%" }}
       >
         {/* Left Section */}
         <div

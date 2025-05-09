@@ -78,7 +78,7 @@ const CVInput = () => {
       </small>
 
       <div className="d-flex flex-column justify-content-center align-items-center">
-        <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "60%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+        <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "60%", backgroundColor: 'rgba(0, 0, 0, 0.7)', marginTop: "100px" }}>
 
           <div className="row">
             {/* Resume Section */}
