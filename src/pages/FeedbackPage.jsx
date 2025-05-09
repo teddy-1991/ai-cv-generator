@@ -49,7 +49,7 @@ const FeedbackPage = () => {
         Photo by <a href="https://unsplash.com/@magnetme" className="text-blue text-decoration-underline" target="_blank" rel="noopener noreferrer">Magnet.me</a> on Unsplash
       </small>
 
-      <div className="container p-4 rounded shadow text-white mt-4" style={{ maxWidth: "60%", backgroundColor: 'rgba(0, 0, 0, 0.7)', marginTop: "8vh" }}>
+      <div className="container p-4 rounded shadow text-white mt-4" style={{ maxWidth: "60%", backgroundColor: 'rgba(0, 0, 0, 0.7)', marginTop: "100px" }}>
         <h2 className="mb-4">💬 We'd love your feedback!</h2>
         {isSent ? (
           <div className="alert alert-success">Thank you! Your feedback has been sent.</div>

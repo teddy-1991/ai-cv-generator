@@ -62,7 +62,7 @@ const CoverLetterScreen = () => {
       </small>
 
       <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-        <div className="card p-4 shadow-lg" style={{ width: "90%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
+        <div className="card p-4 shadow-lg" style={{ width: "90%", backgroundColor: 'rgba(0, 0, 0, 0.7)', marginTop: "100px" }}>
 
           {/* 버튼 영역 */}
           <div className="d-flex justify-content-between  align-items-center mb-4">
@@ -80,7 +80,7 @@ const CoverLetterScreen = () => {
 
             <h2 className="fw-bold text-center text-white">📄 Generated Cover Letter</h2>
 
-            <button className="btn btn-secondary" onClick={() => navigate(-1)}
+            <button className="btn btn-secondary" onClick={() => navigate("/")}
               style={{ backgroundColor: "#7C6CE0", color: "#f0f0f0", border: "none", padding: "0.6rem 1.2rem", fontSize: "1rem" }}
               onMouseEnter={(e) => { e.target.style.backgroundColor = "#5f27cd"; }}
               onMouseLeave={(e) => { e.target.style.backgroundColor = "#8E7BEF"; }}>
@@ -116,7 +116,7 @@ const CoverLetterScreen = () => {
           {/* 좌우 비교 레이아웃 */}
           <div className="d-flex gap-4">
             {/* 기존 커버레터 */}
-            <div className="flex-fill p-3 border rounded bg-white" style={{ maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
+            <div className="flex-fill p-3 border rounded bg-white" style={{ width: "50%", maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <h6 className="fw-bold mb-0">Original Cover Letter</h6>
                 <button
@@ -131,7 +131,7 @@ const CoverLetterScreen = () => {
 
             {/* 새로 생성된 커버레터 */}
             {regeneratedLetter && (
-              <div className="flex-fill p-3 border rounded bg-white" style={{ maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
+              <div className="flex-fill p-3 border rounded bg-white" style={{ width: "50%", maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
                               <div className="d-flex justify-content-between align-items-center mb-2">
                 <h6 className="fw-bold mb-0">Regenerated Version</h6>
                 <button
