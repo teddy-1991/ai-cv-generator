@@ -1,8 +1,11 @@
+// CoverLetterScreen.jsx
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import CoverLetterDisplay from "./CoverLetterDisplay";
 import axios from "axios";
+import Header from '../components/Header';
+import BackgroundWrapper from "../components/BackgroundWrapper";
 
 const CoverLetterScreen = () => {
   const location = useLocation();
@@ -13,13 +16,11 @@ const CoverLetterScreen = () => {
   const resumeText = location.state?.resumeText || localStorage.getItem("resumeText") || "";
   const jobDescription = location.state?.jobDescription || localStorage.getItem("jobDescription") || "";
 
-  // States for regeneration flow
   const [showOptions, setShowOptions] = useState(false);
   const [newStyle, setNewStyle] = useState("Professional");
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [regeneratedLetter, setRegeneratedLetter] = useState("");
 
-  // Download current cover letter as PDF
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     doc.setFont("helvetica", "normal");
@@ -28,16 +29,14 @@ const CoverLetterScreen = () => {
     doc.save("cover_letter.pdf");
   };
 
-  // Request a new version from the backend
   const handleRegenerate = async () => {
-    // ✅ 유효성 검사 추가
     if (!resumeText.trim() || !jobDescription.trim()) {
       alert("Resume or job description is missing for regeneration.");
       return;
     }
-  
+
     setIsRegenerating(true);
-  
+
     try {
       const response = await axios.post("http://localhost:5000/generate_cover_letter", {
         resume_text: resumeText,
@@ -45,88 +44,116 @@ const CoverLetterScreen = () => {
         keywords: keywords,
         style: newStyle,
       });
-  
+
       setRegeneratedLetter(response.data.cover_letter || "❌ Generation failed");
     } catch (err) {
       console.error("Regeneration failed:", err);
       alert("Failed to generate a new version.");
     }
-  
+
     setIsRegenerating(false);
   };
-  
+
   return (
-    <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light">
-      <div className="card p-4 shadow-lg" style={{ width: "80%", maxWidth: "900px" }}>
-        <h2 className="fw-bold mb-4 text-center">📄 Generated Cover Letter</h2>
+    <BackgroundWrapper>
+      <Header />
+      <small className="text-dark position-absolute bottom-0 end-0 m-2" style={{ zIndex: 2, fontSize: '0.8rem' }}>
+        Photo by <a href="https://unsplash.com/@magnetme" className="text-blue text-decoration-underline" target="_blank" rel="noopener noreferrer">Magnet.me</a> on Unsplash
+      </small>
 
-        <div className="p-3 border rounded bg-white" style={{ maxHeight: "400px", overflowY: "auto", whiteSpace: "pre-line" }}>
-          <CoverLetterDisplay coverLetter={coverLetter} keywords={keywords} />
-        </div>
+      <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <div className="card p-4 shadow-lg" style={{ width: "90%", backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
 
-        <div className="text-end mt-3">
-          <button className="btn btn-secondary me-2" onClick={() => navigate(-1)}>❌ Close</button>
-          <button className="btn btn-primary" onClick={handleDownloadPDF}>📥 Download as PDF</button>
-        </div>
+          {/* 버튼 영역 */}
+          <div className="d-flex justify-content-between  align-items-center mb-4">
+            <button className="btn btn-outline-secondary"
+              onClick={() => setShowOptions(true)}
+              style={{
+                backgroundColor: "#7C6CE0", color: "#f0f0f0", border: "none",
+                padding: "0.6rem 1.2rem", fontSize: "1rem", fontWeight: "bold"
+              }}
+              onMouseEnter={(e) => { e.target.style.backgroundColor = "#5f27cd"; }}
+              onMouseLeave={(e) => { e.target.style.backgroundColor = "#8E7BEF"; }}
+            >
+              Create New Version
+            </button>
 
-        {/* Regenerate Button */}
-        {!showOptions && (
-          <div className="text-center mt-4">
-            <button className="btn btn-outline-secondary" onClick={() => setShowOptions(true)}>
-              🔁 Try Regenerating
+            <h2 className="fw-bold text-center text-white">📄 Generated Cover Letter</h2>
+
+            <button className="btn btn-secondary" onClick={() => navigate(-1)}
+              style={{ backgroundColor: "#7C6CE0", color: "#f0f0f0", border: "none", padding: "0.6rem 1.2rem", fontSize: "1rem" }}
+              onMouseEnter={(e) => { e.target.style.backgroundColor = "#5f27cd"; }}
+              onMouseLeave={(e) => { e.target.style.backgroundColor = "#8E7BEF"; }}>
+              CLOSE ❌
             </button>
           </div>
-        )}
 
-        {/* Regenerate Options */}
-        {showOptions && (
-          <div className="mt-4">
-            <h5 className="fw-bold">Regenerate Cover Letter with a New Style</h5>
-            <div className="d-flex gap-2 mb-3">
-              <select
-                className="form-select"
-                style={{ maxWidth: "250px" }}
-                value={newStyle}
-                onChange={(e) => setNewStyle(e.target.value)}
-              >
-                <option value="Professional">Professional</option>
-                <option value="Casual">Casual</option>
-                <option value="Friendly">Friendly</option>
-              </select>
-              <button className="btn btn-primary" onClick={handleRegenerate} disabled={isRegenerating}>
-                {isRegenerating ? "Generating..." : "Generate Again"}
-              </button>
+          {/* 옵션 선택 */}
+          {showOptions && (
+            <>
+              <h5 className="fw-bold text-white">Regenerate Cover Letter with a New Style</h5>
+              <div className="d-flex gap-2 mb-4">
+                <select
+                  className="form-select"
+                  style={{ maxWidth: "250px" }}
+                  value={newStyle}
+                  onChange={(e) => setNewStyle(e.target.value)}
+                >
+                  <option value="Professional">Professional</option>
+                  <option value="Casual">Casual</option>
+                  <option value="Friendly">Friendly</option>
+                </select>
+                <button className="btn btn-primary" onClick={handleRegenerate} disabled={isRegenerating}
+                style={{ backgroundColor: "#7C6CE0", color: "#f0f0f0", border: "none", fontSize: "1rem" }}
+                onMouseEnter={(e) => { e.target.style.backgroundColor = "#5f27cd"; }}
+                onMouseLeave={(e) => { e.target.style.backgroundColor = "#8E7BEF"; }}>
+                  {isRegenerating ? "Generating..." : "Generate Again"}
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* 좌우 비교 레이아웃 */}
+          <div className="d-flex gap-4">
+            {/* 기존 커버레터 */}
+            <div className="flex-fill p-3 border rounded bg-white" style={{ maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h6 className="fw-bold mb-0">Original Cover Letter</h6>
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={handleDownloadPDF}
+                >
+                  <i className="bi bi-download"></i> Download as PDF
+                </button>
+              </div>
+              <CoverLetterDisplay coverLetter={coverLetter} keywords={keywords} />
             </div>
 
-            {/* Show regenerated version */}
+            {/* 새로 생성된 커버레터 */}
             {regeneratedLetter && (
-  <div className="mt-4">
-    <h5 className="fw-bold">🆕 Regenerated Cover Letter</h5>
-    <div className="p-3 border rounded bg-white" style={{ whiteSpace: "pre-line", maxHeight: "400px", overflowY: "auto" }}>
-      <CoverLetterDisplay coverLetter={regeneratedLetter} keywords={keywords} />
-    </div>
-
-    {/* ✅ PDF Download Button for regenerated version */}
-    <div className="text-end mt-2">
-      <button
-        className="btn btn-outline-primary"
-        onClick={() => {
-          const doc = new jsPDF();
-          doc.setFont("helvetica", "normal");
-          doc.setFontSize(12);
-          doc.text(regeneratedLetter, 10, 10, { maxWidth: 180 });
-          doc.save("regenerated_cover_letter.pdf");
-        }}
-      >
-        📥 Download Regenerated PDF
-      </button>
-    </div>
-  </div>
-)}
+              <div className="flex-fill p-3 border rounded bg-white" style={{ maxHeight: "700px", overflowY: "auto", whiteSpace: "pre-line", fontSize: "1.1rem" }}>
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h6 className="fw-bold mb-0">Regenerated Version</h6>
+                <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={() => {
+                      const doc = new jsPDF();
+                      doc.setFont("helvetica", "normal");
+                      doc.setFontSize(12);
+                      doc.text(regeneratedLetter, 10, 10, { maxWidth: 180 });
+                      doc.save("regenerated_cover_letter.pdf");
+                    }}
+                  >
+                  <i className="bi bi-download"></i> Download as PDF
+                </button>
+                  </div>
+                <CoverLetterDisplay coverLetter={regeneratedLetter} keywords={keywords} />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-    </div>
+    </BackgroundWrapper>
   );
 };
 
