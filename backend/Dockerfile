@@ -18,7 +18,7 @@ COPY . .
 
 # Expose port and run server
 EXPOSE 10000
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--capture-output", "--enable-stdio-inheritance", "app:app"]
 
 # Replace the old:
 RUN pip install -r requirements.txt
