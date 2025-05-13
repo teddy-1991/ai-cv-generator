@@ -2,27 +2,23 @@
 
 Create personalized, keyword-optimized cover letters in seconds using your resume and job description — powered by AI.
 
-<div align="center">
-  <img src="demo.gif" alt="Demo" width="80%" />
-</div>
-
 ---
 
 ### 🔍 Features
 
-- 🧠 **AI-Powered Drafting**  
+🧠 **AI-Powered Drafting**  
   Generates a customized cover letter using OpenAI (GPT-3.5) based on resume and job description.
   
-- 🔎 **Keyword Extraction + Matching**  
+🔎 **Keyword Extraction + Matching**  
   Automatically extracts technical & transferable skills, and matches overlapping terms between resume and JD.
 
-- ✍️ **Style Selection**  
+✍️ **Style Selection**  
   Choose from 3 tone options: Professional, Casual, Friendly.
 
-- 🧩 **Interactive Keyword Editing**  
+🧩 **Interactive Keyword Editing**  
   Add/remove/edit keywords before generating — matched keywords update in real-time.
 
-- 🧾 **PDF Download + Highlighting**  
+🧾 **PDF Download + Highlighting**  
   Download generated letter with matched keywords highlighted.
 
 ---
@@ -31,12 +27,12 @@ Create personalized, keyword-optimized cover letters in seconds using your resum
 
 GetInterviews was designed especially for:
 
-- 🌍 **International students**
-- 🧳 **Newcomers and immigrants**
-- 💬 **Non-native English speakers**
-- ⏳ **Anyone who wants to save time or struggles with writing**
+🌍 **International students**
+🧳 **Newcomers and immigrants**
+💬 **Non-native English speakers**
+⏳ **Anyone who wants to save time or struggles with writing**
 
-> **⚠️ Please note:** The generated letters are AI-drafted suggestions. Always review and customize before submitting.
+**⚠️ Please note:** The generated letters are AI-drafted suggestions. Always review and customize before submitting.
 
 ---
 
@@ -63,7 +59,7 @@ OPENAI_API_KEY=your_api_key_here
 - Backend: Flask (Python)  
 - AI: OpenAI GPT-3.5  
 - PDF: jsPDF  
-- File parsing: PDF, DOCX
+- File parsing: PDF
 
 ---
 
