@@ -13,12 +13,12 @@ def get_style_instructions(style):
     if style == "casual":
         return (
             "Use a casual and approachable tone. Keep the language friendly and natural. "
-            "You can use contractions and a relaxed voice. Structure the letter into 4–5 natural-sounding paragraphs."
+            "You can use contractions and a relaxed voice. Structure the letter into 3–4 natural-sounding paragraphs."
         )
     elif style == "friendly":
         return (
             "Use a warm, personable, and empathetic tone. Be expressive and supportive without being too formal. "
-            "Structure the letter into 5–6 short and engaging paragraphs."
+            "Structure the letter into 3–4 short and engaging paragraphs."
         )
     else:  # Default to professional
         return (

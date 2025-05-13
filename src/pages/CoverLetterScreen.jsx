@@ -20,6 +20,7 @@ const CoverLetterScreen = () => {
   const [newStyle, setNewStyle] = useState("Professional");
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [regeneratedLetter, setRegeneratedLetter] = useState("");
+  const [isRegeneratedLocal, setIsRegeneratedLocal] = useState(false); // 추가
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
@@ -46,6 +47,7 @@ const CoverLetterScreen = () => {
       });
 
       setRegeneratedLetter(response.data.cover_letter || "❌ Generation failed");
+      setIsRegeneratedLocal(true);
     } catch (err) {
       console.error("Regeneration failed:", err);
       alert("Failed to generate a new version.");
@@ -87,7 +89,7 @@ const CoverLetterScreen = () => {
               CLOSE ❌
             </button>
           </div>
-
+          
           {/* 옵션 선택 */}
           {showOptions && (
             <>
@@ -111,6 +113,16 @@ const CoverLetterScreen = () => {
                 </button>
               </div>
             </>
+          )}
+
+          {isRegeneratedLocal ? (
+            <div className="text-center fst-italic mb-3" style={{ fontSize: "2rem", color: "#8E7BEF" }}>
+              Updated with your selected style. You can make further changes below!
+            </div>
+          ) : (
+            <div className="text-center fst-italic mb-3" style={{ fontSize: "2rem", color: "#8E7BEF" }}>
+            Here's a starting point! Tweak it to match your style.
+            </div>
           )}
 
           {/* 좌우 비교 레이아웃 */}
