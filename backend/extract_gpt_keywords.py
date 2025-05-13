@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # Load environment variables
 env_path = os.path.join(os.path.dirname(__file__), ".env.local")
-load_dotenv(dotenv_path=env_path)
+load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -14,6 +14,7 @@ def extract_keywords(prompt_context):
     try:
 
         print("✅ Using OpenAI version:", openai.__version__)
+        print("✅ ENV KEY:", os.getenv("OPENAI_API_KEY"))
 
         
         response = openai.chat.completions.create(
