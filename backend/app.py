@@ -11,7 +11,7 @@ import fitz  # PyMuPDF for PDFs
 import docx
 
 app = Flask(__name__)
-CORS(app, resources={r"/.*": {"origins": "https://getinterviews.vercel.app"}})
+CORS(app, origins=["https://getinterviews.vercel.app"])
 
 UPLOAD_FOLDER = "uploads"
 IMAGE_FOLDER = "images"
