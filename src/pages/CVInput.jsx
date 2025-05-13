@@ -46,6 +46,8 @@ const CVInput = () => {
       alert("Upload resume or Write about job description!");
       return;
     }
+    
+  console.log("📄 보내는 JD 내용:", jobDescription); // ⬅️ 이거 추가!
 
     setLoading(true);
     try {
