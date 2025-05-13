@@ -39,7 +39,7 @@ const CoverLetterScreen = () => {
     setIsRegenerating(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/generate_cover_letter", {
+      const response = await axios.post("https://getinterviews-backend.onrender.com/generate_cover_letter", {
         resume_text: resumeText,
         job_description: jobDescription,
         keywords: keywords,

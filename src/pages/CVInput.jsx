@@ -29,7 +29,7 @@ const CVInput = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:5000/upload", formData, {
+      const response = await axios.post("https://getinterviews-backend.onrender.com/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log("✅ Backend Response:", response.data);
@@ -49,7 +49,7 @@ const CVInput = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/extract_keywords", {
+      const response = await axios.post("https://getinterviews-backend.onrender.com/extract_keywords", {
         resume_text: resumePreview,
         job_description: jobDescription,
       });
