@@ -12,12 +12,16 @@ const KeywordCheckScreen = () => {
     str.trim().toLowerCase().replace(/-/g, "").replace(/\s+/g, "");
 
   const calculateMatchedKeywords = (resume, job) => {
-    const matchedTechnical = resume.technical_skills.filter(r =>
-      job.technical_skills.some(j => normalize(j) === normalize(r))
+    const matchedTechnical = resume.technical_skills.filter(resumeSkill =>
+      job.technical_skills.some(jdSkill =>
+        normalize(jdSkill).includes(normalize(resumeSkill))
+      )
     );
 
-    const matchedTransferable = resume.transferable_skills.filter(r =>
-      job.transferable_skills.some(j => normalize(j) === normalize(r))
+    const matchedTransferable = resume.transferable_skills.filter(resumeSkill =>
+      job.transferable_skills.some(jdSkill =>
+        normalize(jdSkill).includes(normalize(resumeSkill))
+      )
     );
 
     return {
@@ -76,23 +80,18 @@ const KeywordCheckScreen = () => {
     setKeywords(updated);
   };
 
-  const getAllKeywords = () => {
-    const all = [
-      ...keywords.resume.technical_skills,
-      ...keywords.resume.transferable_skills,
-      ...keywords.job.technical_skills,
-      ...keywords.job.transferable_skills,
+  const getMatchedKeywordsOnly = () => {
+    return [
       ...keywords.matched.technical_skills,
       ...keywords.matched.transferable_skills
     ];
-    return [...new Set(all)];
   };
 
   const handleConfirm = async () => {
-    const allKeywords = getAllKeywords();
+    const matchedKeywords = getMatchedKeywordsOnly();
 
-    if (!resumeText || !jobDescription || allKeywords.length === 0) {
-      alert("Missing resume, job description or keywords.");
+    if (!resumeText || !jobDescription || matchedKeywords.length === 0) {
+      alert("Missing resume, job description or matched keywords.");
       return;
     }
 
@@ -101,7 +100,7 @@ const KeywordCheckScreen = () => {
       const response = await axios.post("http://localhost:5000/generate_cover_letter", {
         resume_text: resumeText,
         job_description: jobDescription,
-        keywords: allKeywords,
+        keywords: matchedKeywords,
         style: selectedStyle
       });
 
@@ -112,7 +111,7 @@ const KeywordCheckScreen = () => {
       navigate("/cover-letter", {
         state: {
           coverLetter,
-          keywords: allKeywords,
+          keywords: matchedKeywords,
           style: selectedStyle,
           resumeText,
           jobDescription,
@@ -237,8 +236,11 @@ const KeywordCheckScreen = () => {
           </div>
 
           {/* Matched Keywords */}
-          <div className="mb-4 text-white text-center border-top">
+          <div className="mb-4 text-white text-center border-top">          
             <h5 className="fw-bold mt-4">✅ Matched Keywords</h5>
+            <p className="fst-italic mb-1" style={{ fontSize: "1rem", color: "#8E7BEF" }}>
+              Matched keywords are automatically generated based on resume and job description.
+            </p>
             <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Technical Skills</label>
             {renderTags("matched", "technical_skills", "center")}
             <label className="fw-semibold mb-2" style={{ fontSize: "1.1rem" }}>Transferable Skills</label>
@@ -253,7 +255,6 @@ const KeywordCheckScreen = () => {
                 <select className="form-select" value={targetSection} onChange={(e) => setTargetSection(e.target.value)}>
                   <option value="resume">Resume</option>
                   <option value="job">Job Description</option>
-                  <option value="matched">Matched</option>
                 </select>
               </div>
               <div className="col-md-4">

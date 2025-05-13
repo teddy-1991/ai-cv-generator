@@ -12,7 +12,8 @@ const About = () => {
           <strong>GetInterviews</strong> is an AI-powered cover letter generator designed especially for non-native English speakers, international students, and newcomers.  
           Whether you lack confidence in writing, want to save time, or just need a strong starting point — this tool helps you create personalized, keyword-optimized cover letters using your resume and job description.  
           <br />
-          <span className="text-warning">⚠ Please Note</span><br />The generated letters are intended as drafts. We recommend reviewing and editing them before submitting.
+          <span className="text-warning">⚠ Please Note</span><br />
+          The generated letters are intended as drafts. We recommend reviewing and editing them before submitting.
         </p>
         <p>
           This tool was created as a capstone project by Jooyoung Kim, with the goal of making application processes more efficient and data-driven.
