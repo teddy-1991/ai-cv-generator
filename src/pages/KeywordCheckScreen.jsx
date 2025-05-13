@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from '../components/Header';
@@ -7,6 +7,24 @@ import BackgroundWrapper from "../components/BackgroundWrapper";
 const KeywordCheckScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const normalize = (str) =>
+    str.trim().toLowerCase().replace(/-/g, "").replace(/\s+/g, "");
+
+  const calculateMatchedKeywords = (resume, job) => {
+    const matchedTechnical = resume.technical_skills.filter(r =>
+      job.technical_skills.some(j => normalize(j) === normalize(r))
+    );
+
+    const matchedTransferable = resume.transferable_skills.filter(r =>
+      job.transferable_skills.some(j => normalize(j) === normalize(r))
+    );
+
+    return {
+      technical_skills: matchedTechnical,
+      transferable_skills: matchedTransferable
+    };
+  };
 
   const {
     resume_keywords = { technical_skills: [], transferable_skills: [] },
@@ -21,6 +39,14 @@ const KeywordCheckScreen = () => {
     job: { ...job_keywords },
     matched: { ...matched_keywords }
   });
+
+  useEffect(() => {
+    const updatedMatched = calculateMatchedKeywords(keywords.resume, keywords.job);
+    setKeywords(prev => ({
+      ...prev,
+      matched: updatedMatched
+    }));
+  }, []);
 
   const [selectedStyle, setSelectedStyle] = useState("Professional");
   const [newKeyword, setNewKeyword] = useState("");
@@ -37,6 +63,7 @@ const KeywordCheckScreen = () => {
 
     if (!section.includes(trimmed)) {
       section.push(trimmed);
+      updated.matched = calculateMatchedKeywords(updated.resume, updated.job);
       setKeywords(updated);
       setNewKeyword("");
     }
@@ -45,6 +72,7 @@ const KeywordCheckScreen = () => {
   const handleDeleteKeyword = (sectionKey, type, index) => {
     const updated = { ...keywords };
     updated[sectionKey][type].splice(index, 1);
+    updated.matched = calculateMatchedKeywords(updated.resume, updated.job);
     setKeywords(updated);
   };
 
@@ -87,7 +115,8 @@ const KeywordCheckScreen = () => {
           keywords: allKeywords,
           style: selectedStyle,
           resumeText,
-          jobDescription
+          jobDescription,
+          isRegenerated: false
         }
       });
     } catch (error) {
@@ -97,34 +126,40 @@ const KeywordCheckScreen = () => {
     setLoading(false);
   };
 
-  const renderTags = (sectionKey, type, align = "start") => (
-    <div
-      className={`d-flex flex-wrap gap-2 mb-2 justify-content-${align} text-center`}
-    >
-      {keywords[sectionKey][type].map((keyword, idx) => (
-        <div
-          key={idx}
-          className="badge text-white d-flex align-items-center"
-          style={{
-            backgroundColor: "#5f27cd",
-            color: "#fff",
-            padding: "0.5rem 0,9rem",
-            fontSize: "1rem",
-            borderRadius: "1rem",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-          }}
-        >
-          <span>{keyword}</span>
-          <button
-            type="button"
-            className="btn-close btn-close-white ms-2"
-            style={{ fontSize: "0.6rem" }}
-            onClick={() => handleDeleteKeyword(sectionKey, type, idx)}
-          />
-        </div>
-      ))}
-    </div>
-  );
+  const renderTags = (sectionKey, type, align = "start") => {
+    const items = keywords[sectionKey][type];
+    return (
+      <div className={`d-flex flex-wrap gap-2 mb-2 justify-content-${align} text-center`}>
+        {items.length > 0 ? (
+          items.map((keyword, idx) => (
+            <div
+              key={idx}
+              className="badge text-white d-flex align-items-center"
+              style={{
+                backgroundColor: "#5f27cd",
+                padding: "0.5rem 0.9rem",
+                fontSize: "1rem",
+                borderRadius: "1rem",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+              }}
+            >
+              <span>{keyword}</span>
+              <button
+                type="button"
+                className="btn-close btn-close-white ms-2"
+                style={{ fontSize: "0.6rem" }}
+                onClick={() => handleDeleteKeyword(sectionKey, type, idx)}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="fst-italic" style={{ color: "red", fontSize: "1.1rem" }}>
+            No matched keywords found.
+          </div>
+        )}
+      </div>
+    );
+  };
   
 
   return (

@@ -34,7 +34,7 @@ def extract_gpt_keywords(resume_text, job_description_text):
     # Extract resume-based keywords
     resume_prompt = f"""
     Analyze the following resume text and extract:
-    - 13 technical skills (e.g., tools, programming, certifications)
+    - 10 technical skills (e.g., tools, programming, certifications)
     - 7 transferable skills (e.g., communication, teamwork, leadership)
 
     Return format:
@@ -51,7 +51,7 @@ def extract_gpt_keywords(resume_text, job_description_text):
     # Extract job description-based keywords
     jd_prompt = f"""
     Analyze the following job description and extract:
-    - 13 technical skills
+    - 10 technical skills
     - 7 transferable skills
 
     Return format:
@@ -67,14 +67,17 @@ def extract_gpt_keywords(resume_text, job_description_text):
 
     # Extract matched keywords from both
     match_prompt = f"""
-    Compare the following resume and job description. Extract overlapping or similar keywords:
-    - Up to 13 matched technical skills
-    - Up to 7 matched transferable skills
+    Compare the following resume and job description.
+
+    Only extract keywords that appear **exactly** in both the resume and the job description.
+    Do not include similar or related terms—only exact text matches.
+    - Up to 10 technical skills
+    - Up to 7 transferable skills
 
     Return format:
     {{
-      "technical_skills": [...],
-      "transferable_skills": [...]
+    "technical_skills": [...],
+    "transferable_skills": [...]
     }}
 
     Resume:
