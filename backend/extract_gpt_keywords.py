@@ -12,6 +12,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def extract_keywords(prompt_context):
     """Call OpenAI API with a given prompt and return parsed JSON response."""
     try:
+
+        print("✅ Using OpenAI version:", openai.__version__)
+
+        
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[

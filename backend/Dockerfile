@@ -24,5 +24,5 @@ CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
 RUN pip install -r requirements.txt
 
 # With this (명시적으로 최신 pip + OpenAI)
-RUN pip install --upgrade pip && pip install openai==1.3.7 && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip uninstall -y openai && pip install openai==1.3.7 && pip install -r requirements.txt
 
