@@ -1,59 +1,65 @@
-# 🧠 AI Cover Letter & CV Generator
+✨ AI Cover Letter Generator (GetInterviews)
+Create personalized, keyword-optimized cover letters in seconds using your resume and job description — powered by AI.
 
-A web application that generates personalized cover letters using AI.  
-Users can upload their resume and a job description, and the system will extract key skills and generate a tailored cover letter using the OpenAI API.
+<div align="center"> <img src="demo.gif" alt="Demo" width="80%" /> </div>
+🔍 Features
+🧠 AI-Powered Drafting
+Generates a customized cover letter using OpenAI (GPT-3.5) based on resume and job description.
 
----
+🔎 Keyword Extraction + Matching
+Automatically extracts technical & transferable skills, and matches overlapping terms between resume and JD.
 
-## 🚀 Features
+✍️ Style Selection
+Choose from 3 tone options: Professional, Casual, Friendly.
 
-- 📄 Upload resume and job description (JD)
-- 🧠 Extract keywords using OpenAI
-- ✍️ Generate cover letter in 3 styles: Professional, Friendly, Casual
-- 💾 Download the final letter as a PDF
-- 🖥️ Simple and user-friendly web interface
+🧩 Interactive Keyword Editing
+Add/remove/edit keywords before generating — matched keywords update in real-time.
 
----
+🧾 PDF Download + Highlighting
+Download generated letter with matched keywords highlighted.
 
-## 🛠 Tech Stack
+🌏 Who is it for?
+GetInterviews was designed especially for:
 
-| Layer     | Technology           |
-|-----------|----------------------|
-| Frontend  | HTML, CSS, JavaScript, **Bootstrap** |
-| Backend   | Python, Flask        |
-| AI Engine | OpenAI GPT API       |
+🌍 International students
 
----
-## 📸 Demo (Screenshots)
-![ai1](https://github.com/user-attachments/assets/fcfee0cc-56b5-447f-9e2f-9776da0b3852)
-![ai2](https://github.com/user-attachments/assets/f0daa806-2ea2-42bd-b55b-f16067de5b3c)
-![ai4](https://github.com/user-attachments/assets/906d5eb5-3be0-49a3-92c0-b7cbe942d320)
-![ai3](https://github.com/user-attachments/assets/4c79296a-e2d1-4656-b901-aca4138aabfc)
+🧳 Newcomers and immigrants
 
----
+💬 Non-native English speakers
 
-## 📄 License
+⏳ Anyone who wants to save time or struggles with writing
 
-This project is licensed under the MIT License.  
-You are free to use, modify, and distribute it with attribution.
+<span style={{ color: 'red', fontWeight: 'bold' }}>Please note:</span>
+The generated letters are AI-drafted suggestions. Always review and customize before submitting.
 
----
-
-## ⚙️ Getting Started
-
-```bash
-# Clone the repository
-git clone https://github.com/teddy-1991/ai-cv-generator.git
+🚀 Getting Started
+bash
+Copy
+Edit
+git clone https://github.com/teddy-1991/ai-cv-generator
 cd ai-cv-generator
+npm install
+npm run dev
+📝 Create a .env.local file and add your OpenAI API key:
 
-# Run the backend
-cd backend
-pip install -r requirements.txt
-python app.py
+env
+Copy
+Edit
+OPENAI_API_KEY=your_api_key_here
+🖼️ Tech Stack
+Frontend: React + Bootstrap
 
-# Run the frontend
-cd ../frontend
-# Open index.html in your browser (or use Live Server)
+Backend: Flask (Python)
 
+AI: OpenAI GPT-3.5
 
+PDF: jsPDF
+
+File parsing: PDF, DOCX
+
+📸 Screenshots
+(여기에 추후 이미지 캡처나 demo.gif 추가하면 좋아!)
+
+💬 Contact
+Made with ❤️ by Jooyoung Kim
 
