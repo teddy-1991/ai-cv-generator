@@ -27,10 +27,10 @@ Create personalized, keyword-optimized cover letters in seconds using your resum
 
 GetInterviews was designed especially for:
 
-🌍 **International students**
-🧳 **Newcomers and immigrants**
-💬 **Non-native English speakers**
-⏳ **Anyone who wants to save time or struggles with writing**
+🌍 **International students**..
+🧳 **Newcomers and immigrants**..
+💬 **Non-native English speakers**..
+⏳ **Anyone who wants to save time or struggles with writing**..
 
 **⚠️ Please note:** The generated letters are AI-drafted suggestions. Always review and customize before submitting.
 
