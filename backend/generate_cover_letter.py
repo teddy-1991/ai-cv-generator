@@ -31,29 +31,35 @@ def generate_cover_letter(resume_text, job_description, keywords=None, style="Pr
 
     keyword_text = ""
     if keywords:
-        keyword_text = f"\nThe following keywords are relevant to this role:\n{', '.join(keywords)}\nPlease incorporate them naturally."
+        keyword_text = f"""
+        The following keywords are relevant to this role and were identified as important matches between the resume and job description:
+
+        {', '.join(keywords)}
+
+        Please make sure to incorporate **at least 5 of these keywords** in the cover letter. Use them naturally and clearly to demonstrate alignment with the job requirements.
+        """
 
     tone_instruction = get_style_instructions(style)
 
     prompt = f"""
-You are a skilled career coach and professional writer.
-Generate a compelling cover letter based on the resume and job description below.
+    You are a skilled career coach and professional writer.
+    Generate a compelling cover letter based on the resume and job description below.
 
-{tone_instruction}
+    {tone_instruction}
 
-{keyword_text}
+    {keyword_text}
 
-Resume:
-{resume_text}
+    Resume:
+    {resume_text}
 
-Job Description:
-{job_description}
+    Job Description:
+    {job_description}
 
-Return Format (Valid JSON):
-{{
-  "cover_letter": "Generated cover letter here..."
-}}
-"""
+    Return Format (Valid JSON):
+    {{
+    "cover_letter": "Generated cover letter here..."
+    }}
+    """
 
     try:
         response = openai.chat.completions.create(

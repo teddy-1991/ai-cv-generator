@@ -1,7 +1,6 @@
 import openai
 import os
 import json
-import sys
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -14,10 +13,6 @@ def extract_keywords(prompt_context):
     """Call OpenAI API with a given prompt and return parsed JSON response."""
     try:
 
-        print("✅ Using OpenAI version:", openai.__version__)
-        print("✅ ENV KEY:", os.getenv("OPENAI_API_KEY"))
-        sys.stdout.flush()
-        
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
