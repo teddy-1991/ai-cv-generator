@@ -2,5 +2,8 @@ Flask
 Flask-Cors
 openai
 python-dotenv
-PyPDF2
+PyMuPDF
+python-docx
+pdf2image
+Pillow
 gunicorn
