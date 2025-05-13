@@ -65,7 +65,12 @@ OPENAI_API_KEY=your_api_key_here
 
 ### 📸 Screenshots
 
-_Add demo images or animated gif here if available._
+![s1](https://github.com/user-attachments/assets/e94a519b-bfec-40ef-a799-abb1744352a6)
+![s2](https://github.com/user-attachments/assets/cb16cf93-c63d-4c97-afe1-d3e07399d1a2)
+![s3](https://github.com/user-attachments/assets/e73c2a67-2607-4817-80ed-3eb45c800a0a)
+![s4](https://github.com/user-attachments/assets/f03f67a8-e00b-4227-a487-5a5b0a4d9a79)
+![s5](https://github.com/user-attachments/assets/f8096c7f-bc3e-4aaf-91a2-43596112f12f)
+
 
 ---
 
