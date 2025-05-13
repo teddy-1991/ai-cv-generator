@@ -35,23 +35,24 @@ def extract_text_from_docx(docx_path):
     return text.strip()
 
 import platform
-
 def convert_pdf_to_images(pdf_path):
     system = platform.system()
     if system == "Windows":
         poppler_path = r"C:\\poppler-24.08.0\\Library\\bin"
         images = convert_from_path(pdf_path, dpi=200, poppler_path=poppler_path)
     else:
-        images = convert_from_path(pdf_path, dpi=200)  # Linux는 보통 poppler 설치되어 있으면 PATH에 포함됨
+        images = convert_from_path(pdf_path, dpi=200)
 
     image_paths = []
     base_name = os.path.splitext(os.path.basename(pdf_path))[0]
+    public_url = os.getenv("PUBLIC_BASE_URL", "http://127.0.0.1:5000")  # ✅ 여기 추가!
+
     for i, img in enumerate(images):
         img_path = os.path.join(app.config["IMAGE_FOLDER"], f"{base_name}_{i}.png")
         img.save(img_path, "PNG")
-        image_paths.append(f"http://127.0.0.1:5000/images/{os.path.basename(img_path)}")
-    return image_paths
+        image_paths.append(f"{public_url}/images/{os.path.basename(img_path)}")  # ✅ 이 부분 수정
 
+    return image_paths
 
 @app.route("/")
 def home():
