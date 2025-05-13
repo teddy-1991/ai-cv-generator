@@ -22,6 +22,8 @@ def extract_keywords(prompt_context):
         )
 
         raw_text = response.choices[0].message.content.strip()
+        print("✅ OpenAI Raw:", raw_text)  # ✅ 이거 추가
+
         if raw_text.startswith("```json"):
             raw_text = raw_text[7:-3].strip()
 
